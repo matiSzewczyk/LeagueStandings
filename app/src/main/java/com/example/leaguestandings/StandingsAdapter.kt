@@ -3,7 +3,6 @@ package com.example.leaguestandings
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.leaguestandings.databinding.FragmentLeagueStandingsBinding
 import com.example.leaguestandings.databinding.StandingsItemBinding
 
 class StandingsAdapter(
@@ -19,12 +18,13 @@ class StandingsAdapter(
     }
 
     override fun onBindViewHolder(holder: StandingsViewHolder, position: Int) {
-        holder.apply {
-            // TODO: 21.12.2021  
+        holder.binding.apply {
+            teamName.text = teams[position].team.name
         }
     }
 
     override fun getItemCount(): Int {
+        println("teams.size is ${teams.size}")
         return teams.size
     }
 
