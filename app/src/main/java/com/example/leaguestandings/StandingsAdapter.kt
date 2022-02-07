@@ -27,6 +27,4 @@ class StandingsAdapter(
         println("teams.size is ${teams.size}")
         return teams.size
     }
-
-
 }
