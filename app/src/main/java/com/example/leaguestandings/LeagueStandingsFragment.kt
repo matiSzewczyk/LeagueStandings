@@ -20,13 +20,6 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings) {
     private lateinit var binding: FragmentLeagueStandingsBinding
 
     private lateinit var standingsAdapter: StandingsAdapter
-//    private val standingsApi = StandingsApi(object: StandingsApi {
-//        override suspend fun getStandings(league: Int, season: Int): Response<Standings> {
-//        }
-//    })
-//    private val standingsRepository = StandingsRepository(standingsApi)
-//    private val factory = ViewModelFactory(standingsRepository)
-//    private val standingsViewModel = ViewModelProvider(this, factory).get(StandingsViewModel::class.java)
     private val standingsViewModel : StandingsViewModel by viewModels()
     private lateinit var teams: List<Standing>
 
