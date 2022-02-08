@@ -28,6 +28,7 @@
         app:layout_constraintTop_toBottomOf="@id/league_spinner">
         
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_standings"
             android:text="Standings"
             android:background="@color/black"
             android:textColor="#cacaca"
@@ -35,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_stats"
             android:text="Stats"
             android:background="@color/black"
             android:textColor="#cacaca"
@@ -42,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_matches"
             android:text="Matches"
             android:background="@color/black"
             android:textColor="#cacaca"

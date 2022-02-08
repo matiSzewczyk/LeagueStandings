@@ -13,7 +13,7 @@ import okhttp3.internal.Internal.instance
 import retrofit2.Response
 
 const val LEAGUE = 39
-const val SEASON = 2020
+const val SEASON = 2021
 
 class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings) {
 

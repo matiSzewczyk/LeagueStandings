@@ -19,7 +19,13 @@ class StandingsAdapter(
 
     override fun onBindViewHolder(holder: StandingsViewHolder, position: Int) {
         holder.binding.apply {
+            teamPlacement.text = teams[position].rank.toString()
             teamName.text = teams[position].team.name
+            teamPlayed.text = (teams[position].home.played + teams[position].away.played).toString()
+            teamWins.text = (teams[position].home.win + teams[position].away.win).toString()
+            teamDraws.text = (teams[position].home.draw + teams[position].away.draw).toString()
+            teamLosses.text = (teams[position].home.lose + teams[position].away.lose).toString()
+            teamPoints.text = teams[position].points.toString()
         }
     }
 
