@@ -5,12 +5,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leaguestandings.databinding.FragmentLeagueStandingsBinding
-import okhttp3.internal.Internal.instance
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 const val LEAGUE = 39
 const val SEASON = 2021
@@ -19,31 +21,56 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings) {
 
     private lateinit var binding: FragmentLeagueStandingsBinding
 
-    private lateinit var standingsAdapter: StandingsAdapter
+    lateinit var standingsAdapter: StandingsAdapter
     private val standingsViewModel : StandingsViewModel by viewModels()
-    private lateinit var teams: List<Standing>
+    lateinit var teams: List<Standing>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentLeagueStandingsBinding.bind(view)
 
+        GlobalScope.launch {
+            standingsViewModel.getStandings(LEAGUE, SEASON)
+            withContext(Main) {
+                teams = standingsViewModel.standings.value!!
+                setupRecyclerView()
+            }
+        }
+
         val standingsObserver = Observer<List<Standing>> { newTeams ->
             teams = newTeams
         }
 
-        lifecycleScope.launchWhenCreated {
-            standingsViewModel.getStandings(LEAGUE, SEASON)
-            teams = standingsViewModel.standings.value!!
-            setupRecyclerView()
-        }
-
         standingsViewModel.standings.observe(viewLifecycleOwner, standingsObserver)
+
+        binding.button.setOnClickListener {
+            lifecycleScope.launch(IO) {
+                standingsViewModel.getStandings(135, 2021)
+                lifecycleScope.launch(Main) {
+                    teams = standingsViewModel.standings.value!!
+                    setupRecyclerView()
+                    standingsAdapter.notifyDataSetChanged()
+                }
+            }
+            println("\nYEEEEEEP")
+            println(teams)
+            println("\nEND OF YEEEEP")
+//            println(StandingsAdapter(standingsViewModel.standings.value!!).teams)
+        }
     }
 
     private fun setupRecyclerView() = binding.myRecyclerView.apply {
         standingsAdapter = StandingsAdapter(teams)
         adapter = standingsAdapter
         layoutManager = LinearLayoutManager(context)
+    }
+
+    fun test() {
+
+                println(standingsViewModel.standings.value!!)
+                println(LeagueStandingsFragment().teams)
+        teams = standingsViewModel.standings.value!!
+        standingsAdapter.notifyDataSetChanged()
     }
 }

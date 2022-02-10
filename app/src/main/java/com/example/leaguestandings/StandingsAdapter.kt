@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.leaguestandings.databinding.StandingsItemBinding
 
 class StandingsAdapter(
-    private var teams: List<Standing>
+     var teams: List<Standing>
 ) : RecyclerView.Adapter<StandingsAdapter.StandingsViewHolder>() {
 
     inner class StandingsViewHolder(val binding: StandingsItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -30,7 +30,6 @@ class StandingsAdapter(
     }
 
     override fun getItemCount(): Int {
-        println("teams.size is ${teams.size}")
         return teams.size
     }
 }
