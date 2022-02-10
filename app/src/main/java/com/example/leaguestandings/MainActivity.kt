@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 test = 6
                 println("\ntest 1 = $test")
             }
-            LeagueStandingsFragment().test()
+//            LeagueStandingsFragment().test()
             println("\ntest 2 = $test")
 //            adapter.notifyDataSetChanged()
         }

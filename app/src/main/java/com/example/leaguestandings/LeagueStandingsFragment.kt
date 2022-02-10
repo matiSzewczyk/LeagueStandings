@@ -30,16 +30,15 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings) {
 
         binding = FragmentLeagueStandingsBinding.bind(view)
 
-        lifecycleScope.launch(IO) {
+        setupRecyclerView()
+        lifecycleScope.launch(Main) {
             standingsViewModel.getStandings(LEAGUE, SEASON)
-            lifecycleScope.launch(Main) {
-                teams = standingsViewModel.standings.value!!
-                setupRecyclerView()
-            }
         }
 
         val standingsObserver = Observer<List<Standing>> { newTeams ->
             teams = newTeams
+            standingsAdapter.setListData(standingsViewModel.standings.value!!)
+            standingsAdapter.notifyDataSetChanged()
         }
 
         standingsViewModel.standings.observe(viewLifecycleOwner, standingsObserver)
@@ -47,30 +46,26 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings) {
         binding.button.setOnClickListener {
             lifecycleScope.launch(IO) {
                 standingsViewModel.getStandings(135, 2021)
-                lifecycleScope.launch(Main) {
-                    teams = standingsViewModel.standings.value!!
-                    setupRecyclerView()
                 }
-            }
-            standingsAdapter.notifyDataSetChanged()
-            println("\nYEEEEEEP")
-            println(teams)
-            println("\nEND OF YEEEEP")
-//            println(StandingsAdapter(standingsViewModel.standings.value!!).teams)
         }
     }
 
     private fun setupRecyclerView() = binding.myRecyclerView.apply {
-        standingsAdapter = StandingsAdapter(teams)
+        standingsAdapter = StandingsAdapter()
         adapter = standingsAdapter
         layoutManager = LinearLayoutManager(context)
     }
 
-    fun test() {
+    suspend fun test() {
+        withContext(Main) {
+            teams = standingsViewModel.standings.value!!
+            setupRecyclerView()
+        }
+    }
 
-                println(standingsViewModel.standings.value!!)
-                println(LeagueStandingsFragment().teams)
-        teams = standingsViewModel.standings.value!!
-        standingsAdapter.notifyDataSetChanged()
+    suspend fun test1() {
+        withContext(Main) {
+            teams = standingsViewModel.standings.value!!
+        }
     }
 }

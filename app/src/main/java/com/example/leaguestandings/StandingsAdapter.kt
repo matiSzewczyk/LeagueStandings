@@ -5,9 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leaguestandings.databinding.StandingsItemBinding
 
-class StandingsAdapter(
-     var teams: List<Standing>
-) : RecyclerView.Adapter<StandingsAdapter.StandingsViewHolder>() {
+class StandingsAdapter() : RecyclerView.Adapter<StandingsAdapter.StandingsViewHolder>() {
+    var teams= listOf<Standing>()
 
     inner class StandingsViewHolder(val binding: StandingsItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -31,5 +30,9 @@ class StandingsAdapter(
 
     override fun getItemCount(): Int {
         return teams.size
+    }
+
+    fun setListData(data: List<Standing>) {
+        this.teams = data
     }
 }
