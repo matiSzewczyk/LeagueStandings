@@ -30,9 +30,9 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings) {
 
         binding = FragmentLeagueStandingsBinding.bind(view)
 
-        GlobalScope.launch {
+        lifecycleScope.launch(IO) {
             standingsViewModel.getStandings(LEAGUE, SEASON)
-            withContext(Main) {
+            lifecycleScope.launch(Main) {
                 teams = standingsViewModel.standings.value!!
                 setupRecyclerView()
             }
@@ -50,9 +50,9 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings) {
                 lifecycleScope.launch(Main) {
                     teams = standingsViewModel.standings.value!!
                     setupRecyclerView()
-                    standingsAdapter.notifyDataSetChanged()
                 }
             }
+            standingsAdapter.notifyDataSetChanged()
             println("\nYEEEEEEP")
             println(teams)
             println("\nEND OF YEEEEP")
