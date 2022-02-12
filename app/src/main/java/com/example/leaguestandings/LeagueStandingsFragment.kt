@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,11 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leaguestandings.databinding.FragmentLeagueStandingsBinding
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-
-var LEAGUE = 39
-const val SEASON = 2021
 
 class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings),
     AdapterView.OnItemSelectedListener {
@@ -44,23 +39,12 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings),
         spinner.adapter = adapter
         spinner.onItemSelectedListener = this
 
-//        lifecycleScope.launch(Main) {
-//            standingsViewModel.getStandings()
-//        }
-
-        val standingsObserver = Observer<List<Standing>> { _ ->
+        val standingsObserver = Observer<List<Standing>> {
             standingsAdapter.setListData(standingsViewModel.standings.value!!)
             standingsAdapter.notifyDataSetChanged()
         }
 
         standingsViewModel.standings.observe(viewLifecycleOwner, standingsObserver)
-
-//        binding.button.setOnClickListener {
-//            lifecycleScope.launch(IO) {
-//                standingsViewModel.leagueId = 140
-//                standingsViewModel.getStandings()
-//                }
-//        }
     }
 
     private fun setupRecyclerView() = binding.myRecyclerView.apply {
