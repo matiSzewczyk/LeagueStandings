@@ -26,7 +26,6 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings),
     private lateinit var standingsAdapter: StandingsAdapter
     private val standingsViewModel : StandingsViewModel by viewModels()
     private val leagueListViewModel : LeagueListViewModel by viewModels()
-    private lateinit var teams: List<Standing>
     private lateinit var adapter: ArrayAdapter<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
