@@ -1,6 +1,5 @@
 package com.example.leaguestandings
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class LeagueListViewModel : ViewModel() {
@@ -10,7 +9,4 @@ class LeagueListViewModel : ViewModel() {
         "LaLiga",
         "Serie A"
     )
-
-//    fun getLeagueList() {
-//    }
 }

@@ -1,5 +1,6 @@
 package com.example.leaguestandings
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -21,23 +22,15 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings),
     private lateinit var standingsAdapter: StandingsAdapter
     private val standingsViewModel : StandingsViewModel by viewModels()
     private val leagueListViewModel : LeagueListViewModel by viewModels()
-    private lateinit var adapter: ArrayAdapter<String>
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentLeagueStandingsBinding.bind(view)
 
         setupRecyclerView()
-
-        val spinner = binding.leagueSpinner
-        adapter = ArrayAdapter(
-            requireContext(),
-            R.layout.spinner_item,
-            leagueListViewModel.leagueList
-        )
-        spinner.adapter = adapter
-        spinner.onItemSelectedListener = this
+        setupSpinner()
 
         val standingsObserver = Observer<List<Standing>> {
             standingsAdapter.setListData(standingsViewModel.standings.value!!)
@@ -47,6 +40,17 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings),
         standingsViewModel.standings.observe(viewLifecycleOwner, standingsObserver)
     }
 
+    private fun setupSpinner() {
+        val spinner = binding.leagueSpinner
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.spinner_item,
+            leagueListViewModel.leagueList
+        )
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = this
+    }
+
     private fun setupRecyclerView() = binding.myRecyclerView.apply {
         standingsAdapter = StandingsAdapter()
         adapter = standingsAdapter
@@ -54,23 +58,9 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings),
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (parent!!.selectedItemPosition == 0) {
-            lifecycleScope.launch(IO) {
-                standingsViewModel.leagueId = 39 // Premier League
-                standingsViewModel.getStandings()
-            }
-        }
-        if (parent.selectedItemPosition == 1) {
-            lifecycleScope.launch(IO) {
-                standingsViewModel.leagueId = 140 // LaLiga
-                standingsViewModel.getStandings()
-            }
-        }
-        if (parent.selectedItemPosition == 2) {
-            lifecycleScope.launch(IO) {
-                standingsViewModel.leagueId = 135 // Serie A
-                standingsViewModel.getStandings()
-            }
+        lifecycleScope.launch(IO) {
+            standingsViewModel.setLeague(parent!!.selectedItemPosition)
+            standingsViewModel.getStandings()
         }
     }
 

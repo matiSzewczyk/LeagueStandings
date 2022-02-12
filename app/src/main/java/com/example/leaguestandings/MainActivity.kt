@@ -1,7 +1,6 @@
 package com.example.leaguestandings
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.leaguestandings.databinding.ActivityMainBinding
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity() {
             // TODO: Change fragment here, the fragment should handle the api calls(launch when created)
             buttonStandings.setOnClickListener {
                 setFragment(LeagueStandingsFragment())
-//                Toast.makeText(applicationContext, "changed", Toast.LENGTH_SHORT).show()
             }
             buttonStats.setOnClickListener {
             }
