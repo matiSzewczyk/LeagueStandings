@@ -45,9 +45,9 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings),
         spinner.adapter = adapter
         spinner.onItemSelectedListener = this
 
-        lifecycleScope.launch(Main) {
-            standingsViewModel.getStandings()
-        }
+//        lifecycleScope.launch(Main) {
+//            standingsViewModel.getStandings()
+//        }
 
         val standingsObserver = Observer<List<Standing>> { _ ->
             standingsAdapter.setListData(standingsViewModel.standings.value!!)
@@ -76,7 +76,6 @@ class LeagueStandingsFragment : Fragment(R.layout.fragment_league_standings),
                 standingsViewModel.leagueId = 39 // Premier League
                 standingsViewModel.getStandings()
             }
-            Toast.makeText(context, "pressed ${parent.selectedItemPosition}", Toast.LENGTH_SHORT).show()
         }
         if (parent.selectedItemPosition == 1) {
             lifecycleScope.launch(IO) {
