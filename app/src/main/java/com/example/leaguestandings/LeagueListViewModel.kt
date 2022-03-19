@@ -7,6 +7,9 @@ class LeagueListViewModel : ViewModel() {
     var leagueList = listOf(
         "Premier League",
         "LaLiga",
-        "Serie A"
+        "Serie A",
+        "Bundesliga",
+        "Ligue 1",
+        "Eredivisie"
     )
 }

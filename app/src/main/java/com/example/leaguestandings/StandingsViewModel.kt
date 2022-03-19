@@ -11,7 +11,10 @@ class StandingsViewModel : ViewModel() {
     private val listOfIDs = listOf(
         39,     // Premier League
         140,    // LaLiga
-        135     // Serie A
+        135,    // Serie A
+        78,     // Bundesliga
+        61,     // Ligue 1
+        88      // Eredivisie
     )
 
     suspend fun getStandings() {
