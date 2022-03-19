@@ -1,13 +1,23 @@
 package com.example.leaguestandings
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.leaguestandings.databinding.ActivityMainBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding : ActivityMainBinding
+    private val standingsViewModel: StandingsViewModel by viewModels()
+    private val leagueListViewModel : LeagueListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,9 +25,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupSpinner()
 
         binding.apply {
-            // TODO: Change fragment here, the fragment should handle the api calls(launch when created)
             buttonStandings.setOnClickListener {
                 setFragment(LeagueStandingsFragment())
             }
@@ -34,5 +44,26 @@ class MainActivity : AppCompatActivity() {
             addToBackStack(null)
             commit()
         }
+    }
+
+    private fun setupSpinner() {
+        val spinner = binding.leagueSpinner
+        val adapter = ArrayAdapter(
+            this,
+            R.layout.spinner_item,
+            leagueListViewModel.leagueList
+        )
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = this
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            standingsViewModel.setLeague(parent!!.selectedItemPosition)
+            standingsViewModel.getStandings()
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
     }
 }
