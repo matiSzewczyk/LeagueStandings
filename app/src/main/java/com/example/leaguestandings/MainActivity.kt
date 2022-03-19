@@ -9,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.leaguestandings.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +23,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val standingsViewModel: StandingsViewModel by viewModels()
     private val leagueListViewModel : LeagueListViewModel by viewModels()
 
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,22 +33,18 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         setupSpinner()
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_Fragment) as NavHostFragment
+        navController = navHostFragment.findNavController()
+
         binding.apply {
             buttonStandings.setOnClickListener {
-                setFragment(LeagueStandingsFragment())
+                val action = NavGraphDirections.actionGlobalLeagueStandingsFragment()
+                navController.navigate(action)
             }
             buttonStats.setOnClickListener {
             }
             buttonMatches.setOnClickListener {
             }
-        }
-    }
-
-    private fun setFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.nav_host_Fragment, fragment)
-            addToBackStack(null)
-            commit()
         }
     }
 

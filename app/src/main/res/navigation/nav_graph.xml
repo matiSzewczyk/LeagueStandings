@@ -7,5 +7,5 @@
     <fragment
         android:id="@+id/leagueStandingsFragment"
         android:name="com.example.leaguestandings.LeagueStandingsFragment"
-        android:label="LeagueStandingsFragment" />
+        android:label="LeagueStandingsFragment" /><action android:id="@+id/action_global_leagueStandingsFragment" app:destination="@id/leagueStandingsFragment"/>
 </navigation>
