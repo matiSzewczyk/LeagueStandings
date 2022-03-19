@@ -12,4 +12,5 @@
     <color name="dark">#242424</color>
     <color name="medium">#292929</color>
     <color name="light">#a9a9a9</color>
+    <color name="teal_100">#002924</color>
 </resources>
