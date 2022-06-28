@@ -9,7 +9,7 @@ interface StandingsApi {
 
     @Headers(
         "x-rapidapi-host: api-football-v1.p.rapidapi.com",
-        "x-rapidapi-key: a6f9374385msh158f578f13d690cp1b0af7jsnf8e0ff676775"
+        BuildConfig.API_KEY
     )
     @GET("standings")
     suspend fun getStandings(

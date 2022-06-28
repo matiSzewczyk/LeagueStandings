@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.leaguestandings.databinding.StandingsItemBinding
 
 class StandingsAdapter() : RecyclerView.Adapter<StandingsAdapter.StandingsViewHolder>() {
-    var teams= listOf<Standing>()
+    var teams = listOf<Standing>()
 
     inner class StandingsViewHolder(val binding: StandingsItemBinding) : RecyclerView.ViewHolder(binding.root)
 
